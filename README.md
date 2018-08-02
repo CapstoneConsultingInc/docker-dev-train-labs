@@ -1,1 +1,1 @@
-# docker-dev-train-labs
+# docker-training-labs
