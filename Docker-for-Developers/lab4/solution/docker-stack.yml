@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  tomcatTest:
+    image: tomcat8-lab2
+    ports:
+      - "8080:8080"
+      - :8443:8443"
+    deploy:
+      mode: replicated
+      replicas: 1
