@@ -1,0 +1,180 @@
+PS C:\WINDOWS\system32> docker version
+Client:
+ Version:           18.06.0-ce
+ API version:       1.38
+ Go version:        go1.10.3
+ Git commit:        0ffa825
+ Built:             Wed Jul 18 19:05:28 2018
+ OS/Arch:           windows/amd64
+ Experimental:      false
+
+Server:
+ Engine:
+  Version:          18.06.0-ce
+  API version:      1.38 (minimum version 1.12)
+  Go version:       go1.10.3
+  Git commit:       0ffa825
+  Built:            Wed Jul 18 19:13:46 2018
+  OS/Arch:          linux/amd64
+  Experimental:     true
+
+PS C:\WINDOWS\system32> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: cwaid
+Password:
+Login Succeeded
+
+PS C:\WINDOWS\system32> docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+9db2ca6ccae0: Pull complete
+Digest: sha256:4b8ff392a12ed9ea17784bd3c9a8b1fa3299cac44aca35a85c90c5e3c7afacdc
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/engine/userguide/
+
+PS C:\WINDOWS\system32>
+PS C:\WINDOWS\system32> docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+hello-world         latest              2cb0d9787c4d        3 weeks ago         1.85kB
+
+PS C:\WINDOWS\system32> docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+PS C:\WINDOWS\system32> docker container ls -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+6c64241357ad        hello-world         "/hello"            3 minutes ago       Exited (0) 3 minutes ago                       distracted_vaughan
+
+
+PS Y:\> docker run -d -p 8080:8080 tomcat:8.0
+Unable to find image 'tomcat:8.0' locally
+8.0: Pulling from library/tomcat
+d660b1f15b9b: Pull complete
+46dde23c37b3: Pull complete
+ac5ffaa94f61: Pull complete
+f7e9f30394f5: Pull complete
+3ae3a41d5873: Pull complete
+8eea330fdc65: Pull complete
+d051bc095250: Pull complete
+d4f397a5ced6: Pull complete
+8b01e0b079d4: Pull complete
+e63b68df2293: Pull complete
+e045242e6369: Pull complete
+Digest: sha256:af34b623b0920d4f4737d7c9db9df1f92c8372626af5a30685d8cff351e0e8b5
+Status: Downloaded newer image for tomcat:8.0
+29b5831d1ecefd6257fa3e9757bc265fe674b3672fe86a937f6c0423762eb9f7
+
+
+PS Y:\> docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
+29b5831d1ece        tomcat:8.0          "catalina.sh run"   39 seconds ago      Up 35 seconds       0.0.0.0:8080->8080/tcp   clever_kare
+PS Y:\>
+
+PS Y:\> docker exec -it 29b5831d1ece bash
+root@29b5831d1ece:/usr/local/tomcat# ls
+LICENSE  NOTICE  RELEASE-NOTES  RUNNING.txt  bin  conf  include  lib  logs  native-jni-lib  temp  webapps  work
+root@29b5831d1ece:/usr/local/tomcat# ls logs
+catalina.2018-08-01.log      localhost.2018-08-01.log             manager.2018-08-01.log
+host-manager.2018-08-01.log  localhost_access_log.2018-08-01.txt
+root@29b5831d1ece:/usr/local/tomcat# exit
+exit
+PS Y:\>
+
+PS Y:\> docker logs 29b5831d1ece
+01-Aug-2018 21:50:01.118 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/8.0.53
+01-Aug-2018 21:50:01.121 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jun 29 2018 14:42:45 UTC
+01-Aug-2018 21:50:01.122 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         8.0.53.0
+01-Aug-2018 21:50:01.123 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+01-Aug-2018 21:50:01.124 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            4.9.93-linuxkit-aufs
+01-Aug-2018 21:50:01.124 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+01-Aug-2018 21:50:01.125 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/lib/jvm/java-7-openjdk-amd64/jre
+01-Aug-2018 21:50:01.125 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.7.0_181-b01
+01-Aug-2018 21:50:01.125 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+01-Aug-2018 21:50:01.129 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /usr/local/tomcat
+01-Aug-2018 21:50:01.129 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /usr/local/tomcat
+01-Aug-2018 21:50:01.133 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties
+01-Aug-2018 21:50:01.133 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+01-Aug-2018 21:50:01.134 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+01-Aug-2018 21:50:01.134 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+01-Aug-2018 21:50:01.134 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+01-Aug-2018 21:50:01.134 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/usr/local/tomcat
+01-Aug-2018 21:50:01.134 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/usr/local/tomcat
+01-Aug-2018 21:50:01.134 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/usr/local/tomcat/temp
+01-Aug-2018 21:50:01.134 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library 1.2.17 using APR version 1.5.1.
+01-Aug-2018 21:50:01.134 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+01-Aug-2018 21:50:01.155 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized (OpenSSL 1.1.0f  25 May 2017)
+01-Aug-2018 21:50:01.372 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-apr-8080"]
+01-Aug-2018 21:50:01.394 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-apr-8009"]
+01-Aug-2018 21:50:01.399 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 1316 ms
+01-Aug-2018 21:50:01.448 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service Catalina
+01-Aug-2018 21:50:01.449 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/8.0.53
+01-Aug-2018 21:50:01.482 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/examples
+01-Aug-2018 21:50:04.283 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/examples has finished in 2,796 ms
+01-Aug-2018 21:50:04.285 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/docs
+01-Aug-2018 21:50:04.381 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/docs has finished in 96 ms
+01-Aug-2018 21:50:04.383 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/manager
+01-Aug-2018 21:50:04.484 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/manager has finished in 101 ms
+01-Aug-2018 21:50:04.486 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/host-manager
+01-Aug-2018 21:50:04.561 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/host-manager has finished in 74 ms
+01-Aug-2018 21:50:04.563 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/ROOT
+01-Aug-2018 21:50:04.624 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/ROOT has finished in 62 ms
+01-Aug-2018 21:50:04.671 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-apr-8080"]
+01-Aug-2018 21:50:04.783 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-apr-8009"]
+01-Aug-2018 21:50:04.859 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 3460 ms
+PS Y:\>
+PS Y:\> docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
+29b5831d1ece        tomcat:8.0          "catalina.sh run"   4 minutes ago       Up 19 seconds       0.0.0.0:8080->8080/tcp   clever_kare
+PS Y:\> docker container stop 29b5831d1ece
+29b5831d1ece
+PS Y:\> docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+PS Y:\> docker container ls -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                            PORTS               NAMES
+29b5831d1ece        tomcat:8.0          "catalina.sh run"   6 minutes ago       Exited (143) About a minute ago                       clever_kare
+PS Y:\>
+PS Y:\> docker container rm 29b5831d1ece
+29b5831d1ece
+PS Y:\> docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+tomcat              8.0                 5c4bd237605a        28 hours ago        356MB
+hello-world         latest              2cb0d9787c4d        3 weeks ago         1.85kB
+PS Y:\> docker image rm 5c4bd237605a
+Untagged: tomcat:8.0
+Untagged: tomcat@sha256:af34b623b0920d4f4737d7c9db9df1f92c8372626af5a30685d8cff351e0e8b5
+Deleted: sha256:5c4bd237605a079c443c9e3a4b2c5fe0e3f5b5ea5889c9a6005af20bc9c3dd60
+Deleted: sha256:7ef0c2095b2083405cf312bbdf96aabfe701b7e0feec98cc87b2f86a5f09fc31
+Deleted: sha256:185fb960aab09bd3ba172ca0f90ed5804a7470669633203a03234ca795d7aace
+Deleted: sha256:1bdc9e19193c5c8ef579c6f11d056692976ba4aa0b7107150d8027d687f061f6
+Deleted: sha256:89ef1e394cd3053a9c85fcc3f438a4be39805bee2857740184749115b85ee340
+Deleted: sha256:a28a0e51d17cfaf651ee3d7605a99c0a3fea5898e1211d0c696937cbc3aa22b8
+Deleted: sha256:e651e73e8d92bb9ac330531666254d6d27be82da33b489edeee0583f64def841
+Deleted: sha256:f9aaefe9f8527d2716894f483fed949c8c951f88f666c7106a4a2ffa4dea14d7
+Deleted: sha256:644f62c7a780081265bf84f81f4affb8cd1772b0b95f2dba3f7311988787942b
+Deleted: sha256:2c343a6f9a785b2f2a9e0848be3286da5988a5fc95c1894ebb617d14756ed74d
+Deleted: sha256:8a6b78a6a8a45337cd8eac5b8627793fa507d07e142c3ba635b299b476d37524
+Deleted: sha256:dd1eb1fd7e08dc9bda0cbea31a89196c453cb218bea80ce64eeb19fadc98d262
+PS Y:\>
+
+
+
+
+
