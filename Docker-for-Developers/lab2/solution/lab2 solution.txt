@@ -1,0 +1,100 @@
+lab2 solution:
+
+In this directory there is a Dockerfile. 
+
+To build the image:
+> docker build -t tomcat8-lab2 .
+Sending build context to Docker daemon  22.02kB
+Step 1/5 : from tomcat:8.0
+8.0: Pulling from library/tomcat
+d660b1f15b9b: Pull complete
+46dde23c37b3: Pull complete
+ac5ffaa94f61: Pull complete
+f7e9f30394f5: Pull complete
+3ae3a41d5873: Pull complete
+8eea330fdc65: Pull complete
+d051bc095250: Pull complete
+d4f397a5ced6: Pull complete
+8b01e0b079d4: Pull complete
+e63b68df2293: Pull complete
+e045242e6369: Pull complete
+Digest: sha256:af34b623b0920d4f4737d7c9db9df1f92c8372626af5a30685d8cff351e0e8b5
+Status: Downloaded newer image for tomcat:8.0
+ ---> 5c4bd237605a
+Step 2/5 : copy server.xml /usr/local/tomcat/conf/
+ ---> e9c4d6a26ba6
+Step 3/5 : copy ssl.crt /usr/local/tomcat/conf/ssl.crt
+ ---> 5adc7189b007
+Step 4/5 : copy ssl.key /usr/local/tomcat/conf/ssl.key
+ ---> 494feb4040ec
+Step 5/5 : EXPOSE 8443
+ ---> Running in b603f325291a
+Removing intermediate container b603f325291a
+ ---> 1e93388e3ef3
+Successfully built 1e93388e3ef3
+Successfully tagged tomcat8-lab2:latest
+SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
+
+List image:
+> docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+tomcat8-lab2        latest              1e93388e3ef3        3 minutes ago       356MB
+tomcat              8.0                 5c4bd237605a        2 days ago          356MB
+hello-world         latest              2cb0d9787c4d        3 weeks ago         1.85kB
+Run the image:
+> docker run -d -p8080:8080 -p8443:
+8443 tomcat8-lab2
+1c2731ba5c3eb9302e5a42c1294e6333f79df596839d03d0f0fba064796f7f26
+
+> docker container ls
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                                            NAMES
+1c2731ba5c3e        tomcat8-lab2        "catalina.sh run"   17 seconds ago      Up 8 seconds        0.0.0.0:8080->8080/tcp, 0.0.0.0:8443->8443/tcp   musing_torvalds
+>
+
+> curl http://localhost:8080
+
+
+StatusCode        : 200
+StatusDescription : OK
+Content           :
+
+
+                    <!DOCTYPE html>
+                    <html lang="en">
+                        <head>
+                            <meta charset="UTF-8" />
+                            <title>Apache Tomcat/8.0.53</title>
+                            <link href="favicon.ico" rel="icon" type="image/x-icon" />
+                            <...
+RawContent        : HTTP/1.1 200 OK
+                    Transfer-Encoding: chunked
+                    Content-Type: text/html;charset=UTF-8
+                    Date: Thu, 02 Aug 2018 18:39:08 GMT
+                    Server: Apache-Coyote/1.1
+
+
+
+
+                    <!DOCTYPE html>
+                    <html lang="en">
+                        <head>
+                       ...
+Forms             : {}
+Headers           : {[Transfer-Encoding, chunked], [Content-Type, text/html;charset=UTF-8], [Date, Thu, 02 Aug 2018
+                    18:39:08 GMT], [Server, Apache-Coyote/1.1]}
+Images            : {@{innerHTML=; innerText=; outerHTML=<IMG alt="[tomcat logo]" src="tomcat.png">; outerText=;
+                    tagName=IMG; alt=[tomcat logo]; src=tomcat.png}}
+InputFields       : {}
+Links             : {@{innerHTML=Home; innerText=Home; outerHTML=<A href="https://tomcat.apache.org/">Home</A>;
+                    outerText=Home; tagName=A; href=https://tomcat.apache.org/}, @{innerHTML=Documentation;
+                    innerText=Documentation; outerHTML=<A href="/docs/">Documentation</A>; outerText=Documentation;
+                    tagName=A; href=/docs/}, @{innerHTML=Configuration; innerText=Configuration; outerHTML=<A
+                    href="/docs/config/">Configuration</A>; outerText=Configuration; tagName=A; href=/docs/config/},
+                    @{innerHTML=Examples; innerText=Examples; outerHTML=<A href="/examples/">Examples</A>;
+                    outerText=Examples; tagName=A; href=/examples/}...}
+ParsedHtml        : mshtml.HTMLDocumentClass
+RawContentLength  : 11266
+
+>
+
+To see the screen shots see http-1.png and https-1.png files
