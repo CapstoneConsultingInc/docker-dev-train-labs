@@ -1,6 +1,6 @@
-from tomcat:8.0
+FROM tomcat:8.0
 
-copy server.xml /usr/local/tomcat/conf/
-copy ssl.crt /usr/local/tomcat/conf/ssl.crt
-copy ssl.key /usr/local/tomcat/conf/ssl.key
+COPY server.xml /usr/local/tomcat/conf/
+COPY ssl.crt /usr/local/tomcat/conf/ssl.crt
+COPY ssl.key /usr/local/tomcat/conf/ssl.key
 EXPOSE 8443
