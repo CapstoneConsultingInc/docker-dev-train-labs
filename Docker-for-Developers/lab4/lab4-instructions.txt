@@ -1,6 +1,9 @@
 Lab2
 Make sure to stop tomcat container from lab2.
 
+create a swarm
+validate the swarm is up and running (docker node ls)
+
 Create a Docker stack file that will use the image from lab2
 
 You will need to expose both ports 8080 and 8443. 
