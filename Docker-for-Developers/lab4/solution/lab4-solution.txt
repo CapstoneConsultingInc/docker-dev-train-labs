@@ -1,0 +1,103 @@
+
+1- Create swarm
+> docker swarm init
+Swarm initialized: current node (6hiezgxebavsstjdymtzsv3fu) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-39ea5kop4sskxb6c45kp87gxxko9y9vx2a0hxj4b2m0uiz4hv7-9bv3c5q90elbuzggavvcf3r75 192.168.65.3:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+2- Validate swarm is working by showing nodes
+> docker node ls
+ID                            HOSTNAME                STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+6hiezgxebavsstjdymtzsv3fu *   linuxkit-00155df0c817   Ready               Active              Leader              18.06.0-ce
+
+3- Show image
+> docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+testapp             1                   2b07592f8493        About an hour ago   641MB
+<none>              <none>              d6abea1272b9        About an hour ago   641MB
+<none>              <none>              cb09a7b82907        About an hour ago   830MB
+<none>              <none>              d689a886e8bc        2 hours ago         641MB
+tomcat8-lab2        latest              1e93388e3ef3        22 hours ago        356MB
+tomcat              8.0                 5c4bd237605a        2 days ago          356MB
+openjdk             8                   8c80ddf988c8        2 weeks ago         624MB
+hello-world         latest              2cb0d9787c4d        3 weeks ago         1.85kB
+
+4- Deploy the stack
+> docker stack deploy -c .\docker-stack.yml tomcatlab2
+Creating network tomcatlab2_default
+Creating service tomcatlab2_tomcatTest
+
+4a- Validate app is up and running: I used the browser. See http1 and http2 
+
+5- List the stacks
+> docker stack ls
+NAME                SERVICES            ORCHESTRATOR
+tomcatlab2          1                   Swarm
+
+6- List the services
+> docker service ls
+ID                  NAME                    MODE                REPLICAS            IMAGE                 PORTS
+znhohesiffw9        tomcatlab2_tomcatTest   replicated          1/1                 tomcat8-lab2:latest   *:8080->8080/tcp, *:8443->8443/tcp
+
+7- List the tasks
+docker service ps znhohesiffw9
+ID                  NAME                      IMAGE                 NODE                    DESIRED STATE       CURRENT STATE           ERROR               PORTS
+olrcsu3svmms        tomcatlab2_tomcatTest.1   tomcat8-lab2:latest   linuxkit-00155df0c817   Running             Running 2 minutes ago
+
+8- List the containers
+> docker container ls
+CONTAINER ID        IMAGE                 COMMAND             CREATED             STATUS              PORTS                NAMES
+861e160bd480        tomcat8-lab2:latest   "catalina.sh run"   5 minutes ago       Up 5 minutes        8080/tcp, 8443/tcp   tomcatlab2_tomcatTest.1.olrcsu3svmmsjinecbecrsjke
+
+9- Show logs
+docker container logs 861e160bd480
+03-Aug-2018 16:07:02.337 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version:        Apache Tomcat/8.0.53
+03-Aug-2018 16:07:02.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jun 29 2018 14:42:45 UTC
+03-Aug-2018 16:07:02.351 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server number:         8.0.53.0
+03-Aug-2018 16:07:02.351 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+03-Aug-2018 16:07:02.352 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            4.9.93-linuxkit-aufs
+03-Aug-2018 16:07:02.354 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+03-Aug-2018 16:07:02.354 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/lib/jvm/java-7-openjdk-amd64/jre
+03-Aug-2018 16:07:02.355 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           1.7.0_181-b01
+03-Aug-2018 16:07:02.355 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+03-Aug-2018 16:07:02.356 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /usr/local/tomcat
+03-Aug-2018 16:07:02.363 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /usr/local/tomcat
+03-Aug-2018 16:07:02.365 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties
+03-Aug-2018 16:07:02.375 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+03-Aug-2018 16:07:02.377 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+03-Aug-2018 16:07:02.378 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+03-Aug-2018 16:07:02.384 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+03-Aug-2018 16:07:02.387 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/usr/local/tomcat
+03-Aug-2018 16:07:02.388 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/usr/local/tomcat
+03-Aug-2018 16:07:02.389 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/usr/local/tomcat/temp
+03-Aug-2018 16:07:02.397 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library 1.2.17 using APR version 1.5.1.
+03-Aug-2018 16:07:02.401 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+03-Aug-2018 16:07:02.413 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized (OpenSSL 1.1.0f  25 May 2017)
+03-Aug-2018 16:07:03.006 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-apr-8080"]
+03-Aug-2018 16:07:03.058 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-apr-8443"]
+03-Aug-2018 16:07:03.078 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-apr-8009"]
+03-Aug-2018 16:07:03.082 INFO [main] org.apache.catalina.startup.Catalina.load Initialization processed in 2651 ms
+03-Aug-2018 16:07:03.253 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service Catalina
+03-Aug-2018 16:07:03.253 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/8.0.53
+03-Aug-2018 16:07:03.297 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/examples
+03-Aug-2018 16:07:06.139 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/examples has finished in 2,841 ms
+03-Aug-2018 16:07:06.140 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/docs
+03-Aug-2018 16:07:06.189 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/docs has finished in 48 ms
+03-Aug-2018 16:07:06.190 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/manager
+03-Aug-2018 16:07:06.266 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/manager has finished in 77 ms
+03-Aug-2018 16:07:06.266 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/host-manager
+03-Aug-2018 16:07:06.351 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/host-manager has finished in 85 ms
+03-Aug-2018 16:07:06.353 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory /usr/local/tomcat/webapps/ROOT
+03-Aug-2018 16:07:06.410 INFO [localhost-startStop-1] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory /usr/local/tomcat/webapps/ROOT has finished in 54 ms
+03-Aug-2018 16:07:06.453 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-apr-8080"]
+03-Aug-2018 16:07:06.568 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-apr-8443"]
+03-Aug-2018 16:07:06.577 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-apr-8009"]
+03-Aug-2018 16:07:06.590 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 3507 ms
+>
+
+
+
