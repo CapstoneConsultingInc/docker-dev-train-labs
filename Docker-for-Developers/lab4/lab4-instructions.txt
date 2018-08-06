@@ -1,24 +1,22 @@
-Lab2
-Make sure to stop tomcat container from lab2.
+Lab 4
+Make sure to stop tomcat container from prior labs.
 
-create a swarm
-validate the swarm is up and running (docker node ls)
+1) create a swarm on your laptop.  Validate the swarm is up and running (docker node ls)
 
-Create a Docker stack file that will use the image from lab2
+2) Create a Docker stack file that will use the image from lab2
 
 You will need to expose both ports 8080 and 8443. 
 
-once you have the docker stack file deploy the stack as tomcatlab2
+3) Once you have the docker stack file deploy the stack as tomcatlab2
 
 
-To validate that tomcat is up and running correctly 
-either use a browser or curl cmd.
+4) To validate that tomcat is up and running correctly (use a browser or curl cmd)
 When using ssl you will have to add an exception for the URL. 
-You can use the two urls (listed below) to validate that tomcat is up and running. You
-should see the tomcat page. If you use curl you will see the raw result, for the ssl URL 
-you will have to use the -k option.
+You can use the two urls (listed below) to validate that tomcat is up and running. 
+You should see the tomcat landing page. 
+If you use curl you will see the raw result.  For curl, use the -k option.
 
 http://localhost:8080
 https://localhost:8443
 
-Also so the stack and services that are running.
+5) Also show the stack and services that are running.

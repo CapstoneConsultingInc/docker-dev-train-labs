@@ -31,7 +31,7 @@ hello-world         latest              2cb0d9787c4d        3 weeks ago         
 Creating network tomcatlab2_default
 Creating service tomcatlab2_tomcatTest
 
-4a- Validate app is up and running: I used the browser. See http1 and http2 
+4a- Validate app is up and running: I used the browser. See http1.png and http2.png
 
 5- List the stacks
 > docker stack ls
@@ -97,7 +97,3 @@ docker container logs 861e160bd480
 03-Aug-2018 16:07:06.568 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-apr-8443"]
 03-Aug-2018 16:07:06.577 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-apr-8009"]
 03-Aug-2018 16:07:06.590 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in 3507 ms
->
-
-
-
