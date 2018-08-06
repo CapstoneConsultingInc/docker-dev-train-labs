@@ -1,6 +1,6 @@
 1-Show docker version and settings info
 2-Login to hub.docker.com
-3-Run hello-world
+3-Run "hello-world"
 4-Show docker image
 5-Show docker containers
 6-Start tomcat:8.0 container
