@@ -1,26 +1,25 @@
 Lab2
-Create a Dockerfile that will use tomcat:8.0 as the base image. 
 
-In the Dockerfile you will have to copy the server.xml file to 
-/usr/local/tomcat/conf directory with in the container.
+1) Create a Dockerfile that will use tomcat:8.0 as the base image. 
 
-You will also need to copy the two cert files to /usr/local/tomcat/conf 
-directory to get the certs installed
+    a) In the Dockerfile you will have to copy the server.xml file to /usr/local/tomcat/conf directory within the container.
 
-last you will need to expose port 8443
+    b) You will also need to copy the two cert files to /usr/local/tomcat/conf directory to get the certs installed
+
+    c) Finally, you will need to expose port 8443
 
 
-Once you have the docker file created build the image and run the image.
-Make sure that both 8080 and 8443 are exposed when running the image. 
+2) Once you have the Dockerfile created then build the image and run the image. Make sure that both 8080 and 8443 are exposed when running the image. 
 
-list the image
+3) List the image
 
-To validate that tomcat is up and running correctly 
-either use a browser or curl cmd.
-When using ssl you will have to add an exception for the URL. 
+To validate that tomcat is up and running correctly either use a browser or curl cmd to hit the URL's listed below.
+
+When browsing with https you will have to add an exception for the URL. 
 You can use the two urls (listed below) to validate that tomcat is up and running. You
-should see the tomcat page. If you use curl you will see the raw result, for the ssl URL 
-you will have to use the -k option.
+should see the tomcat home page. 
+
+If you use curl you will see the raw result. Be sure to use the -k option for for the ssl URL.
 
 http://localhost:8080
 https://localhost:8443
