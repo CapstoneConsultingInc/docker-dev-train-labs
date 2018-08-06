@@ -1,13 +1,22 @@
 Lab3
 The object of this lab is to take an application and dockerize it. In this case the app is a simple greeting spring boot app. 
 
-1- You will need to create a Dockerfile to run the app. I used a two stage build docker file since I did not have a complete dev env on the vdi. The 1st half of the Dockerfile will build the spring boot jar files. The 2nd part will build image. To build the app cd lab3/gs-spring-boot-master/complete, you will need to run "./gradlew build". Once the build is complete you will need to execute lab3/gs-spring-boot-master/complete/build/libs/gs-spring-boot-0.1.0.jar
+1- You will need to create a Dockerfile and build an image. 
+
+You could use a two stage build docker file. The 1st half of the Dockerfile will build the spring boot jar files. The 2nd half will build the image. 
+
+To build the app 
+    a) Change directory to lab3/gs-spring-boot-master/complete.
+    b) Build a Dockerfile with the first stage compiling the code. Have this stage run "./gradlew build". 
+    c) Append a second stage to the Dockerfile that builds the runtime image.
+        1) copy lab3/gs-spring-boot-master/complete/build/libs/gs-spring-boot-0.1.0.jar into the second stage image
+        2) execute second stage jar file
 
 2- Display the new image
 
 3- Run the new image 
 
-4- validate that it is working. curl http://localhost:8080 or use a browser
+4- Validate that it is working by 'curl http://localhost:8080' (or use a browser)
 
 5- Display the running container
 
